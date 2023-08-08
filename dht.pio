@@ -1,0 +1,30 @@
+.program dht
+.wrap_target
+    set pins, 1             ; set data line high
+    set pindirs, 1          ; set data line to output to send initialisation pulse
+    pull block              ; pull delay value from C prog into OSR for initialisation pulse
+    set pins, 0             ; set data line low
+    mov x, osr              ; move the delay value into scratch x 
+init:                       ; sends a 1ms initialisation pulse, using a delay value sent from C prog to x via OSR
+    jmp x--, init           ; (decrementing 0 value causes an increment) if x != 0 before dec, reset loop (delaying)
+    set pindirs, 0          ; delay finished, set pins to input ready for data reading
+    wait 1 pin 0            ; wait for two rising edges before reading data
+    wait 0 pin 0
+    wait 1 pin 0
+    wait 0 pin 0
+
+    set y, 31               ; set value in scratch y to 31 for use as 32 bits loop counter
+bits:                       ; start reading data, counts the value of 32 bits (16 for humidity, 16 for temp)
+    wait 1 pin 0 [25]       ; wait for data line to go high
+    in pins, 1              ; after 25 cycle delay, store the value of the data line in the ISR (0, or 1)
+    wait 0 pin 0            ; wait for data line to go low
+    jmp y--, bits           ; if y != 0 before decrement, jump to start of bits loop, else loop has finished
+                            ; 32 bits of data now pushed to ISR with autopush
+    set y,7                 ; set value in scratch y to 7 for use as 8 bits loop counter
+checksum:                   ; start reading 8 bits of data for the checksum value
+    wait 1 pin 0 [25]
+    in pins, 1
+    wait 0 pin 0
+    jmp y--, checksum
+    push block              ; if FIFO has been read, manually push ISR as only 8 bits stored (autopush threshold = 32) 
+.wrap                       ; wrap to beginning, ready to take a new reading
