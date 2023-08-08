@@ -1,5 +1,5 @@
 //
-// Created by steve on 7/25/23.
+// Created by Steve Hopkins on 7/25/23.
 //
 
 #include <stdio.h>
@@ -38,11 +38,11 @@ void dht_read(PIO pio, uint sm, dhtData *reading) {
         return;
     }
 
-    reading->humidity = (float) (byte1 << 8 | byte2) / 10.0;
+    reading->humidity = (float) (byte1 << 8 | byte2) / 10.0f;
 
     int neg = byte3 & 0x80;
     byte3 = byte3 & 0x7F;
-    reading->temperature = (float) (byte3 << 8 | byte4) / 10.0;
+    reading->temperature = (float) (byte3 << 8 | byte4) / 10.0f;
     if (neg > 0)
         reading->temperature = -reading->temperature;
 }

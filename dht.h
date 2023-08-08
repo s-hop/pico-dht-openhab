@@ -1,5 +1,5 @@
 //
-// Created by steve on 7/25/23.
+// Created by Steve Hopkins on 7/25/23.
 //
 
 #ifndef DHT_OPENHAB_DHT_H
