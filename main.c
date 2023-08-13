@@ -106,14 +106,14 @@ int main() {
     while (true) {
         dht_read(pio0, sm, &reading);
 
-        float humidity = reading.humidity;
-        float temperature = reading.temperature;
+        float humidity = roundf(reading.humidity * 100) / 100;
+        float temperature = roundf(reading.temperature * 100) / 100;
 
-        // Convert float values to a string for MQTT publishing payload
-        char payload_string[9];
-        sprintf(payload_string, "%.1f, %.1f", humidity, temperature);
+        // Convert float values to a JSON string for MQTT publishing payload
+        char payload_string[52];
+        sprintf(payload_string, "{\"humidity\": \"%.1f\", \"temperature\": \"%.1f\"}", humidity, temperature);
 
-        mqtt_do_publish(client, "dht", payload_string, 0);
+        mqtt_do_publish(client, "pico/dht", payload_string, 0);
 
         // Remember: DHT22/AM2302 can only be read once every 2 seconds
         sleep_ms(5000);
