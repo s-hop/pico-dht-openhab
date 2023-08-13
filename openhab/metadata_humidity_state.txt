@@ -1,0 +1,6 @@
+value: " "
+config:
+  pattern: "%.1f %%"
+  step: "0.1"
+  min: "0"
+  max: "100"

@@ -1,0 +1,20 @@
+UID: mqtt:topic:mosquitto:pico
+label: Pico
+thingTypeUID: mqtt:topic
+configuration: {}
+bridgeUID: mqtt:broker:mosquitto
+channels:
+  - id: humidity
+    channelTypeUID: mqtt:number
+    label: Humidity
+    description: Humidity data from Pico DHT sensor
+    configuration:
+      stateTopic: pico/dht
+      transformationPattern: JSONPATH:$.humidity
+  - id: temperature
+    channelTypeUID: mqtt:number
+    label: Temperature
+    description: Temperature data from Pico DHT sensor
+    configuration:
+      stateTopic: pico/dht
+      transformationPattern: JSONPATH:$.temperature

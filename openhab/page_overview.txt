@@ -1,0 +1,32 @@
+config:
+  label: Overview
+blocks: []
+masonry:
+  - component: oh-masonry
+    config: {}
+    slots:
+      default:
+        - component: oh-list-card
+          config:
+            title: Pico DHT Sensor
+            mediaList: true
+            simpleList: false
+            noBorder: false
+            noShadow: false
+            outline: false
+          slots:
+            default:
+              - component: oh-label-item
+                config:
+                  title: Humidity
+                  icon: oh:humidity
+                  iconUseState: true
+                  item: pico_humidity
+              - component: oh-label-item
+                config:
+                  title: Temperature
+                  icon: oh:temperature
+                  iconUseState: true
+                  item: pico_temperature
+grid: null
+canvas: null

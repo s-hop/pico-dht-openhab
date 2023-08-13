@@ -1,0 +1,21 @@
+UID: mqtt:broker:mosquitto
+label: Mosquitto
+thingTypeUID: mqtt:broker
+configuration:
+  lwtQos: 0
+  publickeypin: true
+  clientID: openhab
+  keepAlive: 60
+  hostnameValidated: true
+  secure: false
+  birthRetain: true
+  shutdownRetain: true
+  certificatepin: true
+  protocol: TCP
+  qos: 1
+  reconnectTime: 30000
+  port: 1883
+  mqttVersion: V3
+  host: localhost
+  lwtRetain: true
+  enableDiscovery: true

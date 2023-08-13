@@ -1,0 +1,6 @@
+value: " "
+config:
+  pattern: "%.1f °C"
+  step: "0.1"
+  min: "-40"
+  max: "80"
