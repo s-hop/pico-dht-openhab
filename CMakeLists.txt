@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.22)
 include(pico_sdk_import.cmake)
 
 # Set name of project (as PROJECT_NAME), board type and C/C++ standards
-project(dht_openhab C CXX ASM)
+project(pico-dht-openhab C CXX ASM)
 set(PICO_BOARD pico_w)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
@@ -15,6 +15,10 @@ pico_sdk_init()
 
 # point out the CMake, where to find the executable source file
 add_executable(${PROJECT_NAME} main.c connection_config.h dht.h dht.c
+        my_mqtt.h
+        my_mqtt.c
+        wifi.c
+        wifi.h
 )
 
 pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/dht.pio)
