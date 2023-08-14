@@ -5,7 +5,10 @@ Temperature and humidity readings are taken from a DHT22/AM2302 sensor using the
 
 The Pico W uses its onboard Wi-Fi chip and the LwiP library to connect to the local network and act as an MQTT client, publishing DHT readings to an MQTT broker. This example project uses the broker software, Mosquitto, but the Pico programme is platform-agnostic, so you should have no problems connecting to any other broker software you may wish to use.
 
-![OpenHab widget displaying DHT readings](/openhab/widget.png)
+<p align="center">
+  <img src="/openhab/widget.png" />
+</p>
+
 
 ## Setting it up
 This project was created with the Pico C/C++ SDK installed on an Ubuntu Linux machine, with a Raspberry Pi 4 hosting the OpenHab and Mosquitto servers on the [OpenHabian](https://www.openhab.org/docs/installation/openhabian.html) Debian Linux distribution.
