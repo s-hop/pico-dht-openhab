@@ -14,7 +14,9 @@ Some useful resources can be found here:
 
 - [Pico SDK Setup](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html)
 - [MQTT Essentials video series](https://youtu.be/jTeJxQFD8Ak)
+- [Mosquitto documentation](https://mosquitto.org/documentation/)
 - [OpenHab Getting Started](https://www.openhab.org/docs/tutorial/)
+
 
 ### Pico
 Create a new header file in the main project directory called, "connection_config.h" and paste the following code into it:
@@ -34,8 +36,42 @@ Create a new header file in the main project directory called, "connection_confi
 #endif //DHT_OPENHAB_CONNECTION_CONFIG_H
 ```
 - Replace the WIFI_SSID and WIFI_PASS definitions with the details of your Wi-Fi access point. 
-- Replace the MQTT_IP definition with the IP address of your MQTT broker.
+- Replace the MQTT_IP definition with the IP address of your MQTT broker. 
+- **As a secure connection is not used in this project, you should only connect to a device on your local network.**
 
-This should be all that is needed to be able to compile the program and upload it to your Pico.
+This should be all that is needed to be able to compile the program and upload it to your Pico. The program will connect to WiFi and the MQTT broker before publishing a JSON string containing the humidity and temperature readings from the DHT sensor. The readings will be extracted from the JSON string and converted to appropriate number values in OpenHab later.
+
+
 ### Mosquitto
+The following steps are carried out on an OpenHabian (Debian) installation, so may not be applicable if you are using a different OS.
+
+Install Mosquitto:
+```
+sudo apt install mosquitto
+```
+
+To get Mosquitto up and running in the background, input the following:
+
+```
+sudo systemctl start mosquitto
+sudo systemctl daemon-reload
+sudo systemctl enable mosquitto
+```
+
+You can use the [mosquitto_sub](https://mosquitto.org/man/mosquitto_sub-1.html) command to check that the broker is receiving messages from the Pico correctly:
+```
+mosquitto_sub -q 1 -t "pico/dht"
+``` 
+
+If you receive a "permission denied" error, you may need to modify the mosquitto.conf file to allow anonymous connections. Open the file with the following command:
+```
+sudo nano /etc/mosquitto/mosquitto.conf
+``` 
+
+Change "false" in this line to "true": 
+```
+allow_anonymous false
+```
+
+
 ### OpenHab
